@@ -1,3 +1,10 @@
 from django.contrib import admin
+from models import (
+    ShelterType,
+    Facility,
+    Shelter,
+)
 
-# Register your models here.
+admin.site.register(ShelterType)
+admin.site.register(Shelter)
+admin.site.register(Facility)

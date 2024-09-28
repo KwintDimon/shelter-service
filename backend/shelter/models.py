@@ -31,7 +31,7 @@ class Shelter(models.Model):
     facilities = models.ManyToManyField(Facility, blank=True)
     description = models.TextField()
     capacity = models.IntegerField()
-    location = models.CharField(max_length="100")
+    location = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
