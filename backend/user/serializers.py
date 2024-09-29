@@ -5,16 +5,18 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        user = get_user_model()
-        fields = ("id", "phone_number", "password", "is_staff")
+        model = get_user_model()
+        fields = ("id", "phone_number", "password", "is_staff", "first_name", "last_name")
         read_only_fields = ("is_staff",)
-        extra_kwargs = {"password": {"write_only": True, "min_length": 8}}
+        extra_kwargs = {
+            "password": {"write_only": True, "min_length": 8, "required": False}
+        }
 
     def create(self, validated_data):
         """Create a new user with encrypted password & return it"""
         return get_user_model().objects.create_user(**validated_data)
 
-    def update(self, instance, **validated_data):
+    def update(self, instance, validated_data):
         """Update a user, set the new password & return it"""
         password = validated_data.pop("password", None)
         user = super().update(instance, validated_data)
