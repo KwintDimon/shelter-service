@@ -1,9 +1,10 @@
 import './App.scss';
+import { HomeScreen } from './components/HomeScreen/HomeScreen';
 
 const App = () => {
   return (
     <div className="App">
-      <p>Hello world</p>
+      <HomeScreen />
     </div>
   );
 }
