@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.files.storage import FileSystemStorage
+
+image_storage = FileSystemStorage(location='media/shelter_images')
 
 
 class ShelterType(models.Model):
@@ -35,4 +38,13 @@ class Shelter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.shelter_type.name}: {self.user.name}, {self.location}"
+        return f"{self.shelter_type.name}: {self.user.first_name}, {self.location}"
+
+
+class ShelterImage(models.Model):
+    shelter = models.ForeignKey(Shelter, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='shelter_images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.shelter}"
