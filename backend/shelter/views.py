@@ -6,12 +6,13 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from shelter.models import (
     Shelter,
     ShelterType,
-    Facility
+    Facility,
+    ShelterImage,
 )
 from shelter.serializers import (
     ShelterSerializer,
     ShelterTypeSerializer,
-    FacilitySerializer
+    FacilitySerializer,
 )
 
 
@@ -28,7 +29,7 @@ class ShelterViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def _params_to_ints(qs):
-        """Converts a list of string IDs to a list of integers"""
+        """Converts a string IDs to a list of integers"""
         try:
             return [int(str_id) for str_id in qs.split(",")]
         except ValueError:

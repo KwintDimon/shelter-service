@@ -70,11 +70,29 @@ class ShelterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         facilities_data = validated_data.pop("facilities")
         user = self.context["request"].user
+        image_files = validated_data.pop("image_files", [])
         shelter = Shelter.objects.create(user=user, **validated_data)
         shelter.facilities.set(facilities_data)
 
-        images_data = self.context['request'].FILES.getlist('images')
-        for image_data in images_data:
-            ShelterImage.objects.create(shelter=shelter, image=image_data)
+        for image_file in image_files:
+            ShelterImage.objects.create(shelter=shelter, image=image_file)
 
         return shelter
+
+    def update(self, instance, validated_data):
+        if "image_files" in validated_data:
+            ShelterImage.objects.filter(shelter=instance).delete()
+
+            image_files = validated_data.pop("image_files")
+            for image_file in image_files:
+                ShelterImage.objects.create(shelter=instance, image=image_file)
+
+        # Обновляем остальные поля
+        instance.shelter_type = validated_data.get("shelter_type", instance.shelter_type)
+        instance.facilities.set(validated_data.get("facilities", instance.facilities))
+        instance.description = validated_data.get("description", instance.description)
+        instance.capacity = validated_data.get("capacity", instance.capacity)
+        instance.location = validated_data.get("location", instance.location)
+
+        instance.save()
+        return instance
