@@ -87,7 +87,6 @@ class ShelterSerializer(serializers.ModelSerializer):
             for image_file in image_files:
                 ShelterImage.objects.create(shelter=instance, image=image_file)
 
-        # Обновляем остальные поля
         instance.shelter_type = validated_data.get("shelter_type", instance.shelter_type)
         instance.facilities.set(validated_data.get("facilities", instance.facilities))
         instance.description = validated_data.get("description", instance.description)

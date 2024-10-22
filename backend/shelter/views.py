@@ -1,13 +1,13 @@
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, generics, serializers
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from shelter.models import (
     Shelter,
     ShelterType,
     Facility,
-    ShelterImage,
 )
 from shelter.serializers import (
     ShelterSerializer,
