@@ -88,6 +88,18 @@ class ShelterViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
+class ShelterTypeListView(generics.ListAPIView):
+    queryset = ShelterType.objects.all()
+    serializer_class = ShelterTypeSerializer
+    permission_classes = [AllowAny]
+
+
+class FacilityListView(generics.ListAPIView):
+    queryset = Facility.objects.all()
+    serializer_class = FacilitySerializer
+    permission_classes = [AllowAny]
+
+
 class ShelterTypeCreateView(generics.CreateAPIView):
     queryset = ShelterType.objects.all()
     serializer_class = ShelterTypeSerializer
@@ -97,4 +109,4 @@ class ShelterTypeCreateView(generics.CreateAPIView):
 class FacilityCreateView(generics.CreateAPIView):
     queryset = Facility.objects.all()
     serializer_class = FacilitySerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
