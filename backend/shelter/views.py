@@ -40,6 +40,7 @@ class ShelterViewSet(viewsets.ModelViewSet):
         capacity = self.request.query_params.get("capacity")
         facilities = self.request.query_params.get("facilities")
         shelter_type = self.request.query_params.get("shelter_type")
+        location = self.request.query_params.get("location")
 
         queryset = self.queryset
 
@@ -53,6 +54,9 @@ class ShelterViewSet(viewsets.ModelViewSet):
 
         if shelter_type:
             queryset = queryset.filter(shelter_type=shelter_type)
+
+        if location:
+            queryset = queryset.filter(location__contains=location)
 
         return queryset.distinct()
 
@@ -72,6 +76,11 @@ class ShelterViewSet(viewsets.ModelViewSet):
                 "shelter_type",
                 type=OpenApiTypes.NUMBER,
                 description="Filter by shelter type id (ex. ?shelter_type=1)",
+            ),
+            OpenApiParameter(
+                "location",
+                type=OpenApiTypes.STR,
+                description="Filter by location name (ex. ?location=Dnipro)",
             ),
         ]
     )

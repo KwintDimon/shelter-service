@@ -35,7 +35,6 @@ class Shelter(models.Model):
     description = models.TextField()
     capacity = models.IntegerField()
     location = models.CharField(max_length=100)
-    # coordinates = gis_models.PointField(geography=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

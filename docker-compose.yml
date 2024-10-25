@@ -23,12 +23,9 @@ services:
     image: postgres:14-alpine
     ports:
       - "5434:5432"
-    environment:
-      POSTGRES_DB: shelter
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1992
-#    env_file:
-#      - .env
+
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
